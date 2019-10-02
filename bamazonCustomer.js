@@ -47,7 +47,11 @@ function displayAvailableItems() {
         function (err, res) {
             if (err) throw "Error pulling the product list from the database.";
 
-            console.log(res);
+            console.log("\nPRODUCT LISTINGS:\n");
+
+            for (i = 0; i < res.length; i++) {
+                console.log(res[i].product_name + " [ID: " + res[i].id + "]\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nLeft in Stock: " + res[i].stock_quantity + "\n");
+            };
 
             userPurchaseQuestions();
         });
@@ -78,8 +82,6 @@ function userPurchaseQuestions() {
                     if (err) throw "Error finding the selected product in the database.";
 
                     config.quantityToBuy = answers.quantityToBuy;
-
-                    console.log("It is " + res[0].stock_quantity);
 
                     if (res[0].stock_quantity >= config.quantityToBuy) {
 
@@ -113,10 +115,14 @@ function completePurchase() {
         function (err, res) {
             if (err) throw "Error in the completePurchase function.";
 
-            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " units.\n\nThe final price of your order is " + config.orderPrice);
+            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " units.\n\nThe final price of your order is $" + config.orderPrice + ".");
+
+            connection.end();
         });
 };
 
 function notEnoughStock() {
     console.log("\nSorry, not enough stock.");
+
+    connection.end();
 };
