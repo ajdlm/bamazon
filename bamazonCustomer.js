@@ -5,8 +5,15 @@ var inquirer = require("inquirer");
 var password = require("./password.js");
 
 var config = {
+    answers: [],
+
     productChosen: NaN,
-    quantityToBuy: NaN
+
+    quantityToBuy: NaN,
+
+    orderPrice: NaN,
+
+    numInStock: NaN
 };
 
 var connection = mysql.createConnection({
@@ -23,7 +30,7 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function (err) {
-    if (err) throw "error";
+    if (err) throw "Error connecting to the database.";
 
     console.log("Connected.", connection.threadId);
 
@@ -32,34 +39,32 @@ connection.connect(function (err) {
 
 function afterConnection() {
     displayAvailableItems();
-
-    userPurchaseQueries();
-
-    console.log("You purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " units.");
 };
 
 function displayAvailableItems() {
     connection.query("SELECT * FROM PRODUCTS",
 
         function (err, res) {
-            if (err) throw "Error.";
+            if (err) throw "Error pulling the product list from the database.";
 
             console.log(res);
+
+            userPurchaseQuestions();
         });
 };
 
-function userPurchaseQueries() {
-    config.productChosen = whichProduct()
-        //.then(config.quantityToBuy = howManyUnits());
-};
-
-function whichProduct() {
+function userPurchaseQuestions() {
     inquirer
         .prompt([
             {
                 type: "number",
                 message: "Enter the ID number of the product you'd like to purchase.",
                 name: "chosenID"
+            },
+            {
+                type: "number",
+                message: "How many would you like to purchase?",
+                name: "quantityToBuy"
             }
         ])
         .then(answers => {
@@ -70,23 +75,48 @@ function whichProduct() {
                     }
                 ],
                 function (err, res) {
-                    if (err) throw "Error.";
+                    if (err) throw "Error finding the selected product in the database.";
 
-                    return res[0].id;
+                    config.quantityToBuy = answers.quantityToBuy;
+
+                    console.log("It is " + res[0].stock_quantity);
+
+                    if (res[0].stock_quantity >= config.quantityToBuy) {
+
+                        config.productChosen = res[0].product_name;
+
+                        config.numInStock = res[0].stock_quantity;
+
+                        config.orderPrice = config.quantityToBuy * res[0].price;
+
+                        completePurchase();
+                    }
+
+                    else {
+                        notEnoughStock();
+                    };
                 });
         });
 };
 
-function howManyUnits() {
-    inquirer
-        .prompt([
+function completePurchase() {
+    var query = connection.query(
+        "UPDATE products SET ? WHERE ?",
+        [
             {
-                type: "number",
-                message: "How many would you like to purchase?",
-                name: "quantityToBuy"
+                stock_quantity: (config.numInStock - config.quantityToBuy)
+            },
+            {
+                product_name: config.productChosen
             }
-        ])
-        .then(answers => {
-            return answers.quantityToBuy;
+        ],
+        function (err, res) {
+            if (err) throw "Error in the completePurchase function.";
+
+            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " units.\n\nThe final price of your order is " + config.orderPrice);
         });
+};
+
+function notEnoughStock() {
+    console.log("\nSorry, not enough stock.");
 };
