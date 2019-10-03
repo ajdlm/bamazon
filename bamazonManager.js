@@ -148,7 +148,7 @@ function updateProductStock(x, y, z) {
         function (err, res) {
             if (err) throw "Error adding more units of the product to the database.";
 
-            console.log("\nYou added " + y + " units of " + x + " to the store's inventory.\n\nThere are now " + (z + y) + " units of " + x + " in stock.\n");
+            console.log("\nYou added " + Math.floor(y) + " units of " + x + " to the store's inventory.\n\nThere are now " + Math.floor(z + y) + " units of " + x + " in stock.\n");
 
             connection.end();
         });
@@ -189,7 +189,7 @@ function addProductToDatabase(name, department, price, quantity) {
     connection.query("INSERT INTO products SET ?", post, function(err, res, fields) {
         if (err) throw "Error inserting your new product into the database.";
 
-        console.log("Successfully added " + quantity + " copies of " + name + " to the store's inventory.");
+        console.log("Successfully added " + Math.floor(quantity) + " copies of " + name + " to the store's inventory.");
 
         connection.end();
     });

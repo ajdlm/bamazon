@@ -81,7 +81,7 @@ function userPurchaseQuestions() {
                 function (err, res) {
                     if (err) throw "Error finding the selected product in the database.";
 
-                    config.quantityToBuy = answers.quantityToBuy;
+                    config.quantityToBuy = Math.floor(answers.quantityToBuy);
 
                     if (res[0].stock_quantity >= config.quantityToBuy) {
 
