@@ -100,6 +100,18 @@ exports.password = "password";
 
 ![](/assets/images/bamazon-manager-3.gif)
 
+## The Structure of Bamazon's Code
+
+* Both bamazonCustomer.js and bamazonManager.js read from and write to the bamazon MySQL database, which can be created using the code in bamazon.sql.
+
+* Both files also use the Inquirer.js node package to prompt the user for information, which they then use to either decide which information to display from the bamazon MySQL database or to modify the data contained within it.
+
+* Whenever the user modifies the database in some way, the app uses console.log() to display text describing what has been changed.
+
+* bamazonManager.js furthermore starts by using the Inquirer.js node package to display a menu with four different options to the user.
+
+* When the user selects one of them, the app feeds the input from that selection into a switch statement and runs one of several cases, each of which dictates what kinds of prompts and information the user will be met with.
+
 ## Author
 
 Antonio de las Morenas -- responsible for coding the entire app
