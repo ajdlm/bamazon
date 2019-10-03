@@ -110,7 +110,7 @@ function addToInventory() {
             },
             {
                 type: "number",
-                message: "How many units would you like to add to the store's stock?",
+                message: "How many copies would you like to add to the store's stock?",
                 name: "numberToAdd"
             }
         ])
@@ -148,7 +148,7 @@ function updateProductStock(x, y, z) {
         function (err, res) {
             if (err) throw "Error adding more units of the product to the database.";
 
-            console.log("\nYou added " + Math.floor(y) + " units of " + x + " to the store's inventory.\n\nThere are now " + Math.floor(z + y) + " units of " + x + " in stock.\n");
+            console.log("\nYou added " + Math.floor(y) + " copies of " + x + " to the store's inventory.\n\nThere are now " + Math.floor(z + y) + " copies of " + x + " in stock.\n");
 
             connection.end();
         });

@@ -115,7 +115,7 @@ function completePurchase() {
         function (err, res) {
             if (err) throw "Error in the completePurchase function.";
 
-            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " units.\n\nThe final price of your order is $" + config.orderPrice + ".");
+            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " copies.\n\nThe final price of your order is $" + config.orderPrice + ".");
 
             connection.end();
         });
