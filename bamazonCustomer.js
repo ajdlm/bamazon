@@ -4,18 +4,6 @@ var inquirer = require("inquirer");
 
 var password = require("./password.js");
 
-var config = {
-    answers: [],
-
-    productChosen: NaN,
-
-    quantityToBuy: NaN,
-
-    orderPrice: NaN,
-
-    numInStock: NaN
-};
-
 var connection = mysql.createConnection({
     host: "localhost",
 
@@ -81,17 +69,14 @@ function userPurchaseQuestions() {
                 function (err, res) {
                     if (err) throw "Error finding the selected product in the database.";
 
-                    config.quantityToBuy = Math.floor(answers.quantityToBuy);
+                    var quantityToBuy = Math.floor(answers.quantityToBuy);
 
-                    if (res[0].stock_quantity >= config.quantityToBuy) {
+                    if (res[0].stock_quantity >= quantityToBuy) {
+                        var numInStock = res[0].stock_quantity;
 
-                        config.productChosen = res[0].product_name;
+                        var orderPrice = quantityToBuy * res[0].price;
 
-                        config.numInStock = res[0].stock_quantity;
-
-                        config.orderPrice = config.quantityToBuy * res[0].price;
-
-                        completePurchase();
+                        completePurchase(res[0].product_name, numInStock, quantityToBuy, orderPrice);
                     }
 
                     else {
@@ -101,21 +86,21 @@ function userPurchaseQuestions() {
         });
 };
 
-function completePurchase() {
+function completePurchase(name, numInStock, quantityToBuy, orderPrice) {
     connection.query(
         "UPDATE products SET ? WHERE ?",
         [
             {
-                stock_quantity: (config.numInStock - config.quantityToBuy)
+                stock_quantity: (numInStock - quantityToBuy)
             },
             {
-                product_name: config.productChosen
+                product_name: name
             }
         ],
         function (err, res) {
             if (err) throw "Error in the completePurchase function.";
 
-            console.log("\nYou purchased " + config.productChosen + ".\n\nYou bought " + config.quantityToBuy + " copies.\n\nThe final price of your order is $" + config.orderPrice + ".\n");
+            console.log("\nYou purchased " + name + ".\n\nYou bought " + quantityToBuy + " copies.\n\nThe final price of your order is $" + orderPrice + ".\n");
 
             connection.end();
         });
