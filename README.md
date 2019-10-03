@@ -104,7 +104,7 @@ exports.password = "password";
 
 * Both bamazonCustomer.js and bamazonManager.js read from and write to the bamazon MySQL database, which can be created using the code in bamazon.sql.
 
-* Both files also use the Inquirer.js node package to prompt the user for information, which they then use to either decide which information to display from the bamazon MySQL database or to modify the data contained within it.
+* Both files also use the Inquirer.js node package to prompt the user for information, which they use to either decide which information to display from the bamazon MySQL database or to modify the data contained within it.
 
 * Whenever the user modifies the database in some way, the app uses console.log() to display text describing what has been changed.
 
@@ -112,7 +112,7 @@ exports.password = "password";
 
 * When the user selects one of them, the app feeds the input from that selection into a switch statement and runs one of several cases, each of which dictates what kinds of prompts and information the user will be met with.
 
-* The "View Products for Sale" case is unique within in the app in that it contains no break statement.
+* The "View Products for Sale" case is unique from the others in that it contains no break statement.
 
 * Instead, it just sets "config.onlyView" to true, so that when the viewProductsForSale() function is called inside of the "Add to Inventory" case, it will only log out the products that are currently for sale and not continue on to call the addToInventory() function, which prompts the user to add more copies of an item to the store's inventory (i.e., add to its stock_quantity column's integer value within the MySQL database).
 
