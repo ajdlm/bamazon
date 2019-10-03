@@ -112,6 +112,12 @@ exports.password = "password";
 
 * When the user selects one of them, the app feeds the input from that selection into a switch statement and runs one of several cases, each of which dictates what kinds of prompts and information the user will be met with.
 
+* The "View Products for Sale" case is unique within in the app in that it contains no break statement.
+
+* Instead, it just sets "config.onlyView" to true, so that when the viewProductsForSale() function is called inside of the "Add to Inventory" case, it will only log out the products that are currently for sale and not continue on to call the addToInventory() function, which prompts the user to add more copies of an item to the store's inventory (i.e., add to its stock_quantity column's integer value within the MySQL database).
+
+* This logic is created by an if statement, which ends the connection to the database if "config.onlyView" has a value of true and otherwise runs the addToInventory() function.
+
 ## Author
 
 Antonio de las Morenas -- responsible for coding the entire app
