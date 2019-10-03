@@ -94,6 +94,12 @@ exports.password = "password";
 
 ### Examples of Manager Mode
 
+![](/assets/images/bamazon-manager-1.gif)
+
+![](/assets/images/bamazon-manager-2.gif)
+
+![](/assets/images/bamazon-manager-3.gif)
+
 ## Author
 
 Antonio de las Morenas -- responsible for coding the entire app
