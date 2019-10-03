@@ -155,5 +155,42 @@ function updateProductStock(x, y, z) {
 }
 
 function addNewProduct() {
-    // stuff
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "What is the name of the product you would like to add to the store?",
+                name: "productName"
+            },
+            {
+                type: "input",
+                message: "Which department of the store should it be found in?",
+                name: "departmentName"
+            },
+            {
+                type: "number",
+                message: "What price do you want to set for it?",
+                name: "price"
+            },
+            {
+                type: "number",
+                message: "How many copies of the product would you like to stock?",
+                name: "stockQuantity"
+            }
+        ])
+        .then(answers => {
+            addProductToDatabase(answers.productName, answers.departmentName, answers.price, answers.stockQuantity);
+        });
+};
+
+function addProductToDatabase(name, department, price, quantity) {
+    var post = { product_name: name, department_name: department, price: price, stock_quantity: quantity };
+
+    connection.query("INSERT INTO products SET ?", post, function(err, res, fields) {
+        if (err) throw "Error inserting your new product into the database.";
+
+        console.log("Successfully added " + quantity + " copies of " + name + " to the store's inventory.");
+
+        connection.end();
+    });
 };
