@@ -46,6 +46,10 @@ exports.password = "password";
 
 ### Examples of Customer Mode
 
+![](/assets/images/bamazon-customer-1.gif)
+
+![](/assets/images/bamazon-customer-2.gif)
+
 ## Using the App in Manager Mode
 
 * Navigate into the app's repository using the bash command line.
