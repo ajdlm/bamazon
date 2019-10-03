@@ -189,7 +189,7 @@ function addProductToDatabase(name, department, price, quantity) {
     connection.query("INSERT INTO products SET ?", post, function(err, res, fields) {
         if (err) throw "Error inserting your new product into the database.";
 
-        console.log("Successfully added " + Math.floor(quantity) + " copies of " + name + " to the store's inventory.");
+        console.log("\nSuccessfully added " + Math.floor(quantity) + " copies of " + name + " to the store's inventory.\n");
 
         connection.end();
     });
