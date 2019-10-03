@@ -19,7 +19,7 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Chrono Trigger", "Video Games", 39.99, 17);
+VALUES ("Chrono Trigger", "Video Games", 39.99, 4);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Dragon Quest VIII", "Video Games", 44.99, 21);
@@ -40,7 +40,7 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Reading in the Dark: A Novel", "Books", 13.49, 15);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Blade Runner", "Blu-ray", 8.99, 12);
+VALUES ("Blade Runner", "Blu-ray", 8.99, 3);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Lawrence of Arabia", "Blu-ray", 9.99, 15);
