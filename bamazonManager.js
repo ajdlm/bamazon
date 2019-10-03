@@ -119,37 +119,37 @@ function addToInventory() {
         });
 };
 
-function getProductInformation(x, y) {
+function getProductInformation(chosenID, numToAdd) {
     connection.query(
         "SELECT * FROM products WHERE ?",
         [
             {
-                id: x
+                id: chosenID
             }
         ],
         function (err, res) {
             if (err) throw "Error finding product in database.";
 
-            updateProductStock(res[0].product_name, y, res[0].stock_quantity);
+            updateProductStock(res[0].product_name, numToAdd, res[0].stock_quantity);
         });
 };
 
-function updateProductStock(x, y, z) {
+function updateProductStock(name, numToAdd, numInStock) {
     connection.query(
         "UPDATE products SET ? WHERE ?",
         [
             {
-                stock_quantity: (z + y)
+                stock_quantity: (numInStock + numToAdd)
             },
             {
-                product_name: x
+                product_name: name
             }
         ],
         function (err, res) {
             if (err) throw "Error adding more units of the product to the database.";
 
             // Use Math.floor so that the values can't be logged to the console as floats if the numbers entered weren't integers.
-            console.log("\nYou added " + Math.floor(y) + " copies of " + x + " to the store's inventory.\n\nThere are now " + Math.floor(z + y) + " copies of " + x + " in stock.\n");
+            console.log("\nYou added " + Math.floor(numToAdd) + " copies of " + name + " to the store's inventory.\n\nThere are now " + Math.floor(numInStock + numToAdd) + " copies of " + name + " in stock.\n");
 
             connection.end();
         });
