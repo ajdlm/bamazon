@@ -42,7 +42,7 @@ function afterConnection() {
 };
 
 function displayAvailableItems() {
-    connection.query("SELECT * FROM PRODUCTS",
+    connection.query("SELECT * FROM products",
 
         function (err, res) {
             if (err) throw "Error pulling the product list from the database.";
@@ -102,7 +102,7 @@ function userPurchaseQuestions() {
 };
 
 function completePurchase() {
-    var query = connection.query(
+    connection.query(
         "UPDATE products SET ? WHERE ?",
         [
             {
