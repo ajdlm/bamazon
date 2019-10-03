@@ -69,6 +69,7 @@ function userPurchaseQuestions() {
                 function (err, res) {
                     if (err) throw "Error finding the selected product in the database.";
 
+                    // Use Math.floor so that it can't be logged to the console as a float later.
                     var quantityToBuy = Math.floor(answers.quantityToBuy);
 
                     if (res[0].stock_quantity >= quantityToBuy) {

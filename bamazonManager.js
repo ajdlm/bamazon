@@ -148,6 +148,7 @@ function updateProductStock(x, y, z) {
         function (err, res) {
             if (err) throw "Error adding more units of the product to the database.";
 
+            // Use Math.floor so that the values can't be logged to the console as floats if the numbers entered weren't integers.
             console.log("\nYou added " + Math.floor(y) + " copies of " + x + " to the store's inventory.\n\nThere are now " + Math.floor(z + y) + " copies of " + x + " in stock.\n");
 
             connection.end();
